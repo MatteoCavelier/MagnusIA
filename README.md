@@ -27,7 +27,8 @@
 ## Lancer le Back
 
 ```shell
-    mlflow models serve - m "runs:/URI_DU_MODEL/model" - p 1234 - -no - conda
+    cd src
+    python main.py
 ```
 
 ### Lancer l'interface web
