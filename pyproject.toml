@@ -6,7 +6,14 @@ readme = "README.md"
 requires-python = ">=3.13"
 
 dependencies = [
+    "pandas>=2.3.3",
+    "numpy",
+    "scikit-learn>=1.4.0",
+    "mlflow>=2.9.0",
+    "matplotlib",
+    "cloudpickle",
     "pytest",
+    "uvicorn>=0.38.0",
 ]
 
 [tool.pytest.ini_options]
