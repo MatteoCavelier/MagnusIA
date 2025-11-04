@@ -4,4 +4,10 @@ version = "0.1.0"
 description = "Prédiction de gagnant de parties d'echecs"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+
+dependencies = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
