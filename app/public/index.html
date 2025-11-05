@@ -7,8 +7,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="magnus-filters.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // *** CONFIG TAILWIND MISE À JOUR AVEC TOUTES LES COULEURS ***
         tailwind.config = {
             theme: {
                 extend: {
@@ -16,18 +19,52 @@
                         sans: ['Poppins', 'sans-serif'],
                     },
                     colors: {
+                        // COULEURS SPÉCIFIQUES AUX CASES D'ÉCHIQUIER
                         'glacial-light': '#e0f2fe',
                         'glacial-dark': '#075985',
                         'boise-light': '#f0d9b5',
                         'boise-dark': '#8b5c46',
                         'nature-light': '#d9f99d',
                         'nature-dark': '#4d7c0f',
-                        // Ajout des couleurs standard pour la référence texte/filtre
-                        'cyan': { 400: '#22d3ee' },
-                        'red': { 500: '#ef4444' },
-                        'amber': { 500: '#f59e0b', 900: '#78350f' },
-                        'lime': { 400: '#84cc16' },
-                        'gray': { 900: '#111827' }
+                        'lava-light': '#fef3c7',
+                        'lava-dark': '#991b1b',
+                        'ocean-light': '#bfdbfe',
+                        'ocean-dark': '#1e40af',
+                        'tropical-light': '#ecfccb',
+                        'tropical-dark': '#064e3b',
+                        'noir-et-blanc': '#ffffff',
+                        'creme': '#fef3c7',
+                        'charbon': '#1f2937',
+
+                        // COULEURS TAILWIND STANDARD POUR TEXTE/FILTRES
+                        'cyan': {400: '#22d3ee', 700: '#0e7490'},
+                        'red': {500: '#ef4444', 900: '#7f1d1d'},
+                        'amber': {500: '#f59e0b', 900: '#78350f'},
+                        'lime': {300: '#bef264', 400: '#84cc16', 700: '#4d7c0f', 900: '#365314'},
+                        'gray': {
+                            50: '#f9fafb',
+                            200: '#e5e7eb',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827'
+                        },
+                        'orange': {500: '#f97316', 600: '#ea580c'},
+                        'blue': {400: '#60a5fa', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a'},
+                        'emerald': {
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            400: '#34d399',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b'
+                        },
+                        'fuchsia': {400: '#e879f9', 700: '#a21caf', 900: '#581c87'},
+                        'purple': {400: '#c084fc', 600: '#9333ea', 700: '#7e22ce', 900: '#4a044e'},
+                        'zinc': {600: '#52525b', 700: '#3f3f46', 900: '#18181b'},
+                        'yellow': {800: '#92400e', 950: '#451a03'}
                     }
                 }
             }
@@ -41,98 +78,106 @@
             image-rendering: crisp-edges;
             transition: filter 0.5s ease;
         }
-
-        /* --- CLASSES DE FILTRE STATIQUES --- */
-        /* Ces filtres sont pré-calibrés pour teinter une image NOIRE en la couleur désirée */
-
-        /* Glacial: Cyan 400 (pour Blanc) */
-        .filter-cyan-400-piece { filter: invert(70%) sepia(50%) saturate(1500%) hue-rotate(155deg) brightness(90%) contrast(100%); }
-        /* Glacial: Red 500 (pour Noir) */
-        .filter-red-500-piece  { filter: invert(40%) sepia(90%) saturate(2000%) hue-rotate(340deg) brightness(100%) contrast(100%); }
-
-        /* Boise: Amber 500 (pour Blanc) */
-        .filter-amber-500-piece { filter: invert(70%) sepia(50%) saturate(1500%) hue-rotate(345deg) brightness(100%) contrast(100%); }
-        /* Boise: Amber 900 (pour Noir) */
-        .filter-amber-900-piece { filter: invert(20%) sepia(30%) saturate(600%) hue-rotate(20deg) brightness(80%) contrast(100%); }
-
-        /* Nature: Lime 400 (pour Blanc) */
-        .filter-lime-400-piece { filter: invert(80%) sepia(80%) saturate(1000%) hue-rotate(70deg) brightness(100%) contrast(100%); }
     </style>
 </head>
-<body id="body" class="flex flex-col justify-center items-center min-h-screen p-4 transition-colors duration-500 font-sans">
+<body id="body"
+      class="flex flex-col justify-center items-center min-h-screen p-4 transition-colors duration-500 font-sans">
 
-    <div id="theme-selector-container" class="sticky top-4 right-4 z-10 w-full flex justify-end">
-        <div class="flex items-center bg-gray-900/50 p-2 rounded-lg shadow-lg backdrop-blur-sm">
-            <label for="theme-select" class="text-white mr-2 text-sm font-semibold">Thème:</label>
-            <select id="theme-select" onchange="applyTheme(this.value)" class="p-1 rounded bg-gray-700 text-white border border-gray-600 text-sm focus:ring-2 focus:ring-cyan-500">
-                <option value="glacial">Glacial Minimaliste</option>
-                <option value="boise">Classique Boisé</option>
-                <option value="nature">Vert Nature</option>
-            </select>
+<div id="theme-selector-container" class="sticky top-4 right-4 z-10 w-full flex justify-end">
+    <div class="flex items-center bg-gray-900/50 p-2 rounded-lg shadow-lg backdrop-blur-sm">
+        <label for="theme-select" class="text-white mr-2 text-sm font-semibold">Thème:</label>
+        <select id="theme-select" onchange="applyTheme(this.value)"
+                class="p-1 rounded bg-gray-700 text-white border border-gray-600 text-sm focus:ring-2 focus:ring-cyan-500">
+            <option value="glacial">1. Glacial Minimaliste</option>
+            <option value="boise">2. Classique Boisé</option>
+            <option value="nature">3. Vert Nature</option>
+            <option value="lava">4. Lave et Cendres</option>
+            <option value="ocean">5. Océan Profond</option>
+            <option value="tropical">6. Forêt Tropicale</option>
+            <option value="retrowave">7. RetroWave</option>
+            <option value="monochrome">8. Noir & Blanc</option>
+            <option value="autumn">9. Automne</option>
+            <option value="cyberpunk">10. Cyberpunk</option>
+        </select>
+    </div>
+</div>
+<div id="main-card" class="p-8 rounded-xl shadow-2xl max-w-xl w-full border transition-colors duration-500 mb-20">
+
+    <h1 id="title-h1" class="text-4xl text-center font-extrabold mb-2 transition-colors duration-500">Bienvenue sur
+        Magnus IA ♟️</h1>
+    <h2 id="title-h2" class="text-xl text-center font-semibold mb-8 transition-colors duration-500">Votre IA prédictrice
+        d'échecs</h2>
+
+    <div class="flex justify-around w-full mb-10">
+        <label class="flex flex-col items-center">
+            <p class="text-lg mb-1" id="label-white">Elo du joueur <strong id="strong-white"
+                                                                           class="font-bold">BLANC</strong></p>
+            <input name="white_elo" type="text" placeholder="Ex: 1500" id="input-white"
+                   class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+        </label>
+
+        <label class="flex flex-col items-center">
+            <p class="text-lg mb-1" id="label-black">Elo du joueur <strong id="strong-black"
+                                                                           class="font-bold">NOIR</strong></p>
+            <input name="black_elo" type="text" placeholder="Ex: 1500" id="input-black"
+                   class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+        </label>
+    </div>
+
+    <hr id="divider" class="mb-10 transition-colors duration-500"/>
+
+    <h3 id="title-h3" class="lg text-center font-semibold mb-8 transition-colors duration-500">Informations de la
+        partie</h3>
+
+    <div class="flex-col justify-around items-center w-full my-10">
+        <label class="flex flex-col items-center">
+            <p class="text-lg mb-1" id="label-time">Cadence des coups</p>
+            <input name="time" type="text" placeholder="Ex: 10+5" id="input-time"
+                   class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+        </label>
+        <div class="flex justify-between w-full my-10">
+            <label class="flex flex-col items-center">
+                <p class="text-lg text-center mb-1" id="label-ouverture">Ouverture choisie (code)</p>
+                <input name="ouverture" type="text" placeholder="Ex: D10" id="input-ouverture"
+                       class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+            </label>
+
+            <label class="flex flex-col items-center">
+                <p class="text-lg text-center mb-1" id="label-num-move">Nombre de coups estimés pour l'ouverture</p>
+                <input name="number_of_moves" type="number" placeholder="Ex: 3" id="input-num-move"
+                       class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+            </label>
         </div>
     </div>
-    <div id="main-card" class="p-8 rounded-xl shadow-2xl max-w-xl w-full border transition-colors duration-500 mb-20">
 
-        <h1 id="title-h1" class="text-4xl text-center font-extrabold mb-2 transition-colors duration-500">Bienvenue sur Magnus IA ♟️</h1>
-        <h2 id="title-h2" class="text-xl text-center font-semibold mb-8 transition-colors duration-500">Votre IA prédictrice d'échecs</h2>
+    <hr id="divider-2" class="mb-10 transition-colors duration-500"/>
 
-        <div class="flex justify-around w-full mb-10">
-            <label class="flex flex-col items-center">
-                <p class="text-lg mb-1" id="label-white">Elo du joueur <strong id="strong-white" class="font-bold">BLANC</strong></p>
-                <input name="white_elo" type="text" placeholder="Ex: 1500" id="input-white" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
 
-            <label class="flex flex-col items-center">
-                <p class="text-lg mb-1" id="label-black">Elo du joueur <strong id="strong-black" class="font-bold">NOIR</strong></p>
-                <input name="black_elo" type="text" placeholder="Ex: 1500" id="input-black" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
+    <div class="flex justify-center mb-10 rounded-lg">
+        <div id="chessboard"
+             class="grid grid-cols-8 grid-rows-8 w-96 h-96 border-4 shadow-xl transition-colors duration-500">
         </div>
-
-        <hr id="divider" class="mb-10 transition-colors duration-500"/>
-
-        <h3 id="title-h3" class="lg text-center font-semibold mb-8 transition-colors duration-500">Informations de la partie</h3>
-
-        <div class="flex-col justify-around items-center w-full my-10">
-            <label class="flex flex-col items-center">
-                <p class="text-lg mb-1" id="label-time">Cadence des coups</p>
-                <input name="time" type="text" placeholder="Ex: 10+5" id="input-time" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
-            <div class="flex justify-between w-full my-10">
-                <label class="flex flex-col items-center">
-                    <p class="text-lg text-center mb-1" id="label-ouverture">Ouverture choisie (code)</p>
-                    <input name="ouverture" type="text" placeholder="Ex: D10" id="input-ouverture" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-                </label>
-
-                <label class="flex flex-col items-center">
-                    <p class="text-lg text-center mb-1" id="label-num-move">Nombre de coups estimés pour l'ouverture</p>
-                    <input name="number_of_moves" type="number" placeholder="Ex: 3" id="input-num-move" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-                </label>
-            </div>
-        </div>
-
-        <hr id="divider-2" class="mb-10 transition-colors duration-500"/>
-
-
-        <div class="flex justify-center mb-10 rounded-lg">
-            <div id="chessboard" class="grid grid-cols-8 grid-rows-8 w-96 h-96 border-4 shadow-xl transition-colors duration-500">
-                </div>
-        </div>
-
-        <div id="result-container" class="text-center mt-6 p-4 rounded-lg hidden transition-all duration-500">
-            <p class="text-xl font-semibold" id="prediction-text">
-            </p>
-        </div>
-
-        <div class="text-center mt-8">
-            <button id="predict-button" onclick="predictOutcome()" class="font-bold py-3 px-6 rounded-lg shadow-lg transition duration-500">
-                Prédire l'Issue
-            </button>
-        </div>
-
     </div>
+
+    <div id="result-container" class="text-center mt-6 p-4 rounded-lg hidden transition-all duration-500">
+        <p class="text-xl font-semibold" id="prediction-text">
+        </p>
+    </div>
+
+    <div class="text-center mt-8">
+        <button id="predict-button" onclick="predictOutcome()"
+                class="font-bold py-3 px-6 rounded-lg shadow-lg transition duration-500">
+            Prédire l'Issue
+        </button>
+    </div>
+
+</div>
+
+<script src="magnus-themes.js"></script>
 
 <script>
     // --- 0. Définition des Chemins d'Accès Locaux (.png) ---
+    // NOTE : Ces chemins supposent que vous avez un dossier "Ressources"
     const imagePaths = {
         'Rook': 'Ressources/rook.png',
         'Knight': 'Ressources/knight.png',
@@ -146,64 +191,11 @@
         imagePaths.Rook, imagePaths.Knight, imagePaths.Bishop, imagePaths.Queen, imagePaths.King, imagePaths.Bishop, imagePaths.Knight, imagePaths.Rook
     ];
 
-    // --- 1. Définition des Thèmes ---
-    const themes = {
-        glacial: {
-            body: 'bg-gradient-to-b from-blue-900 to-black',
-            card: 'bg-gray-900/80 border-cyan-700',
-            title: 'text-cyan-400',
-            plainText: 'text-white',
-            divider: 'border-cyan-600',
-            button: 'bg-cyan-600 hover:bg-cyan-700 text-white',
-            inputBase: 'border-gray-600 bg-gray-700 text-white',
-            focusRing: 'focus:ring-cyan-500',
-            result: 'bg-cyan-900/50 text-cyan-400 border-cyan-700',
-            lightSquare: 'bg-glacial-light',
-            darkSquare: 'bg-glacial-dark',
-            pieceFilterClassWhite: 'filter-cyan-400-piece',
-            pieceFilterClassBlack: 'filter-red-500-piece',
-            strongTextColorWhite: 'text-cyan-400',
-            strongTextColorBlack: 'text-red-500',
-        },
-        boise: {
-            body: 'bg-gradient-to-br from-yellow-800 to-yellow-950',
-            card: 'bg-amber-100/90 border-amber-800',
-            title: 'text-amber-800',
-            plainText: 'text-gray-900',
-            divider: 'border-amber-800',
-            button: 'bg-amber-700 hover:bg-amber-800 text-white',
-            inputBase: 'border-gray-400 bg-white text-gray-900',
-            focusRing: 'focus:ring-amber-600',
-            result: 'bg-amber-200/50 text-amber-800 border-amber-600',
-            lightSquare: 'bg-boise-light',
-            darkSquare: 'bg-boise-dark',
-            pieceFilterClassWhite: 'filter-amber-500-piece',
-            pieceFilterClassBlack: 'filter-amber-900-piece',
-            strongTextColorWhite: 'text-amber-500',
-            strongTextColorBlack: 'text-amber-900',
-        },
-        nature: {
-            body: 'bg-gradient-to-br from-green-900 to-gray-800',
-            card: 'bg-neutral-800/85 border-lime-700',
-            title: 'text-lime-300',
-            plainText: 'text-white',
-            divider: 'border-lime-700',
-            button: 'bg-lime-600 hover:bg-lime-700 text-white',
-            inputBase: 'border-gray-600 bg-gray-700 text-white',
-            focusRing: 'focus:ring-lime-500',
-            result: 'bg-lime-900/50 text-lime-400 border-lime-700',
-            lightSquare: 'bg-nature-light',
-            darkSquare: 'bg-nature-dark',
-            pieceFilterClassWhite: 'filter-lime-400-piece',
-            pieceFilterClassBlack: 'filter-amber-500-piece',
-            strongTextColorWhite: 'text-lime-400',
-            strongTextColorBlack: 'text-amber-500',
-        }
-    };
+    // L'objet `themes` est maintenant défini dans magnus-themes.js
 
-    let currentThemeName = 'glacial';
+    let currentThemeName = 'glacial'; // Thème par défaut
 
-    // --- Logique de prédiction ---
+    // --- Logique de prédiction (inchangée) ---
     function predictOutcome() {
         const eloWhite = parseInt(document.getElementById('input-white').value);
         const eloBlack = parseInt(document.getElementById('input-black').value);
@@ -233,7 +225,7 @@
         resultContainer.classList.remove('hidden');
     }
 
-    // --- 2. Génération de l'Échiquier ---
+    // --- 2. Génération de l'Échiquier (inchangée) ---
     function generateChessboard(themeData) {
         const board = document.getElementById('chessboard');
         board.innerHTML = '';
@@ -249,7 +241,7 @@
             cell.classList.add('transition-colors', 'duration-500', 'flex', 'justify-center', 'items-center');
 
             let piecePath = '';
-            let pieceFilterClass = ''; // Utilisation de la classe de filtre
+            let pieceFilterClass = '';
 
             if (row === 7 || row === 6) {
                 piecePath = (row === 7) ? piecesLayout[col] : imagePaths.Pawn;
@@ -263,9 +255,7 @@
                 const pieceElement = document.createElement('img');
                 pieceElement.src = piecePath;
                 pieceElement.alt = "Pièce d'échecs";
-                // Rétablissement de l'application de la classe de filtre
                 pieceElement.className = `piece-icon ${pieceFilterClass}`;
-                // Suppression du style.filter dynamique (si existant)
                 pieceElement.style.filter = '';
                 cell.appendChild(pieceElement);
             }
@@ -274,8 +264,9 @@
         }
     }
 
-    // --- Fonction d'Application du Thème ---
+    // --- Fonction d'Application du Thème (inchangée) ---
     function applyTheme(themeName) {
+        // L'objet 'themes' est disponible car magnus-themes.js a été chargé
         const theme = themes[themeName];
         if (!theme) return;
 
@@ -298,31 +289,51 @@
         resultContainer.classList.add(...theme.result.split(' '), 'border');
 
         const elements = [
-            { id: 'body', classes: theme.body, reset: true },
-            { id: 'main-card', classes: theme.card, reset: true },
-            { id: 'title-h1', classes: theme.title, reset: true },
-            { id: 'title-h2', classes: theme.title, reset: true },
-            { id: 'title-h3', classes: theme.title, reset: true },
-            { id: 'label-white', classes: theme.plainText, reset: true },
-            { id: 'label-black', classes: theme.plainText, reset: true },
-            { id: 'label-time', classes: theme.plainText, reset: true },
-            { id: 'label-ouverture', classes: theme.plainText, reset: true },
-            { id: 'label-num-move', classes: theme.plainText, reset: true },
-            { id: 'divider', classes: theme.divider, reset: true },
-            { id: 'divider-2', classes: theme.divider, reset: true },
-            { id: 'predict-button', classes: theme.button, reset: true },
-            { id: 'input-white', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
-            { id: 'input-black', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
-            { id: 'input-time', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
-            { id: 'input-ouverture', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
-            { id: 'input-num-move', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
+            {id: 'body', classes: theme.body, reset: true},
+            {id: 'main-card', classes: theme.card, reset: true},
+            {id: 'title-h1', classes: theme.title, reset: true},
+            {id: 'title-h2', classes: theme.title, reset: true},
+            {id: 'title-h3', classes: theme.title, reset: true},
+            {id: 'label-white', classes: theme.plainText, reset: true},
+            {id: 'label-black', classes: theme.plainText, reset: true},
+            {id: 'label-time', classes: theme.plainText, reset: true},
+            {id: 'label-ouverture', classes: theme.plainText, reset: true},
+            {id: 'label-num-move', classes: theme.plainText, reset: true},
+            {id: 'divider', classes: theme.divider, reset: true},
+            {id: 'divider-2', classes: theme.divider, reset: true},
+            {id: 'predict-button', classes: theme.button, reset: true},
+            {
+                id: 'input-white',
+                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
+                reset: true
+            },
+            {
+                id: 'input-black',
+                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
+                reset: true
+            },
+            {
+                id: 'input-time',
+                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
+                reset: true
+            },
+            {
+                id: 'input-ouverture',
+                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
+                reset: true
+            },
+            {
+                id: 'input-num-move',
+                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
+                reset: true
+            },
 
         ];
 
         elements.forEach(elData => {
             const el = document.getElementById(elData.id);
             if (el) {
-                // Logique de nettoyage (inchangée)
+                // Logique de nettoyage
                 Object.values(themes).forEach(t => {
                     let classesToClear = [t.body, t.card, t.title, t.plainText, t.divider, t.button];
                     if (elData.id.startsWith('input-')) {
@@ -336,7 +347,7 @@
                 el.classList.add(...elData.classes.split(' '));
 
                 if (el.tagName === 'INPUT' || el.tagName === 'BUTTON' || el.tagName === 'HR') {
-                     el.classList.add('transition-colors', 'duration-500');
+                    el.classList.add('transition-colors', 'duration-500');
                 }
             }
         });
@@ -345,6 +356,7 @@
         generateChessboard(theme);
 
         const selectEl = document.getElementById('theme-select');
+        // Nettoyage des focus rings sur le sélecteur
         Object.values(themes).forEach(t => selectEl.classList.remove(t.focusRing.replace('focus:', '')));
         selectEl.classList.add(theme.focusRing.replace('focus:', ''));
     }
