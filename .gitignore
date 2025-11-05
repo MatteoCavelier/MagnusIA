@@ -1,4 +1,7 @@
 .venv
 .idea
 .uv/
-./src/mlruns/
+/src/mlruns/
+/app/node_modules/
+/app/package-lock.json
+/mlruns/0/meta.yaml
