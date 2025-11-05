@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/seiya/OneDrive/Documents/Github/MagnusIA/src/mlruns/627667684397670911/models/m-e3076bb8dc59425eafa2eddbd6b1ebbd/artifacts
+creation_timestamp: 1762334830252
+experiment_id: '627667684397670911'
+last_updated_timestamp: 1762334852096
+model_id: m-e3076bb8dc59425eafa2eddbd6b1ebbd
+model_type: null
+name: model
+source_run_id: 6a5718bd9e2c423aa1d19be3020862c0
+status: 2
+status_message: null

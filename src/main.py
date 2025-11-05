@@ -1,6 +1,6 @@
 from clean_data import get_train_split
 from src.clean_data import clean_chess_data
-from train import train
+from train_ai import train
 import sys
 import subprocess
 import mlflow
