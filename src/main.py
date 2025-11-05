@@ -1,5 +1,5 @@
 from clean_data import get_train
-from train import train
+from train_ai import train
 import sys
 import subprocess
 import mlflow
