@@ -1,5 +1,5 @@
 from clean_data import get_train_split
-from src.clean_data import clean_chess_data
+from clean_data import clean_chess_data
 from train_ai import train
 import sys
 import subprocess
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     print("Training model...")
     x_train, x_test, y_train, y_test = get_train_split(
         clean_chess_data(
-            "./res/games.csv",
+            "../res/games.csv",
             moves_n=3,
             moves_only_n=False
         )["duration"]
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     print(f"Starting MLflow server on http://127.0.0.1:1234")
     print("Press Ctrl+C to stop the server\n")
 
-    # Utiliser le même Python qui exécute ce script
+    # Lancer le model service
     try:
         subprocess.run(
             [sys.executable, "-m", "mlflow", "models", "serve",
