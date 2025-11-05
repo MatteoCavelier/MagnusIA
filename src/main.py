@@ -1,4 +1,5 @@
-from clean_data import get_train
+from clean_data import get_train_split
+from src.clean_data import clean_chess_data
 from train import train
 import sys
 import subprocess
@@ -7,7 +8,13 @@ import mlflow
 if __name__ == "__main__":
     # Entraîner le modèle
     print("Training model...")
-    x_train, x_test, y_train, y_test = get_train()
+    x_train, x_test, y_train, y_test = get_train_split(
+        clean_chess_data(
+            "./res/games.csv",
+            moves_n=3,
+            moves_only_n=False
+        )["duration"]
+    )
     train(x_train, x_test, y_train, y_test)
 
     # Récupérer le dernier run
