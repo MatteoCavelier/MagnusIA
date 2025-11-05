@@ -92,17 +92,26 @@
 
         <h3 id="title-h3" class="lg text-center font-semibold mb-8 transition-colors duration-500">Informations de la partie</h3>
 
-        <div class="flex justify-around w-full mb-10">
+        <div class="flex-col justify-around items-center w-full my-10">
             <label class="flex flex-col items-center">
                 <p class="text-lg mb-1" id="label-time">Cadence des coups</p>
-                <input name="white_elo" type="text" placeholder="Ex: 10+5" id="input-time" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+                <input name="time" type="text" placeholder="Ex: 10+5" id="input-time" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
             </label>
+            <div class="flex justify-between w-full my-10">
+                <label class="flex flex-col items-center">
+                    <p class="text-lg text-center mb-1" id="label-ouverture">Ouverture choisie (code)</p>
+                    <input name="ouverture" type="text" placeholder="Ex: D10" id="input-ouverture" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+                </label>
 
-            <label class="flex flex-col items-center">
-                <p class="text-lg mb-1" id="label-ouverture">Ouverture choisie (code)</p>
-                <input name="black_elo" type="text" placeholder="Ex: D10" id="input-ouverture" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
+                <label class="flex flex-col items-center">
+                    <p class="text-lg text-center mb-1" id="label-num-move">Nombre de coups estimés pour l'ouverture</p>
+                    <input name="number_of_moves" type="number" placeholder="Ex: 3" id="input-num-move" class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+                </label>
+            </div>
         </div>
+
+        <hr id="divider-2" class="mb-10 transition-colors duration-500"/>
+
 
         <div class="flex justify-center mb-10 rounded-lg">
             <div id="chessboard" class="grid grid-cols-8 grid-rows-8 w-96 h-96 border-4 shadow-xl transition-colors duration-500">
@@ -298,12 +307,16 @@
             { id: 'label-black', classes: theme.plainText, reset: true },
             { id: 'label-time', classes: theme.plainText, reset: true },
             { id: 'label-ouverture', classes: theme.plainText, reset: true },
+            { id: 'label-num-move', classes: theme.plainText, reset: true },
             { id: 'divider', classes: theme.divider, reset: true },
+            { id: 'divider-2', classes: theme.divider, reset: true },
             { id: 'predict-button', classes: theme.button, reset: true },
             { id: 'input-white', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
             { id: 'input-black', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
             { id: 'input-time', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
             { id: 'input-ouverture', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
+            { id: 'input-num-move', classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`, reset: true },
+
         ];
 
         elements.forEach(elData => {
