@@ -8,3 +8,5 @@
 /mlruns/0/meta.yaml
 /mlruns/
 /res/mlflow_model/
+/models/
+/notebooks/results/

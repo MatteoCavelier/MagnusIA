@@ -22,7 +22,7 @@ COMMON_FIELDS = [
 models = {}
 models_info = {}
 
-print("🔄 Chargement des modèles...")
+print("Chargement des modèles...")
 for folder in os.listdir(MODELS_DIR):
     folder_path = os.path.join(MODELS_DIR, folder)
     if not os.path.isdir(folder_path):
@@ -30,9 +30,9 @@ for folder in os.listdir(MODELS_DIR):
     try:
         model = mlflow.sklearn.load_model(os.path.join(folder_path, "mlflow_model"))
         models[folder] = model
-        print(f"✅ Modèle chargé : {folder}")
+        print(f"Modèle chargé : {folder}")
     except Exception as e:
-        print(f"❌ Erreur de chargement pour {folder}: {e}")
+        print(f"Erreur de chargement pour {folder}: {e}")
 
 def expected_fields_from_model_name(model_name: str):
     parts = model_name.split("-")
@@ -93,7 +93,7 @@ for model_name, model in models.items():
         return predict
 
     app.add_url_rule(route, route, make_predict(model, model_name, expected), methods=["POST"])
-    print(f"➡ Route créée : {route} (attend {len(expected)} champs)")
+    print(f"Route créée : {route} (attend {len(expected)} champs)")
 
 @app.route("/models-info", methods=["GET"])
 def info():
