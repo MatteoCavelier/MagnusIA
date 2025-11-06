@@ -2,21 +2,16 @@ import os
 import mlflow
 import pandas as pd
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # ✅ active CORS pour toutes les routes
 
 MODELS_DIR = r"../models"
 
-# Mapping de sortie
-LABELS = {
-    0: "black",
-    1: "draw",
-    2: "white"
-}
+LABELS = {0: "black", 1: "draw", 2: "white"}
 
-# Champs communs supposés (ajuste si nécessaire)
 COMMON_FIELDS = [
-    "victory_status",
     "increment_code",
     "white_rating",
     "black_rating",
@@ -24,7 +19,6 @@ COMMON_FIELDS = [
     "opening_ply"
 ]
 
-# Charger les modèles
 models = {}
 models_info = {}
 
@@ -40,33 +34,28 @@ for folder in os.listdir(MODELS_DIR):
     except Exception as e:
         print(f"❌ Erreur de chargement pour {folder}: {e}")
 
-# Détermination des champs attendus selon le nom du modèle
 def expected_fields_from_model_name(model_name: str):
     parts = model_name.split("-")
-    duration_flag = parts[0] if len(parts) > 0 else None
-    turn_flag = parts[1] if len(parts) > 1 else None
-    moves_n = parts[2] if len(parts) > 2 else None
-
     expected = list(COMMON_FIELDS)
 
-    # duration
-    if duration_flag == "duration":
+    if parts[0] == "duration":
         expected.append("time")
-    # turns
-    if turn_flag == "withturn":
+
+    if len(parts) > 1 and parts[1] == "withturn":
         expected.append("turns")
-    # moves
-    if moves_n and moves_n.lower() != "none":
-        try:
-            n = int(moves_n)
-            for i in range(1, n + 1):
-                expected.append(f"moves_{i}")
-        except ValueError:
-            pass
+
+    n_moves = None
+    if len(parts) > 1 and parts[1].isdigit():
+        n_moves = int(parts[1])
+    elif len(parts) > 2 and parts[2].isdigit():
+        n_moves = int(parts[2])
+
+    if n_moves:
+        for i in range(1, n_moves + 1):
+            expected.append(f"moves_{i}")
 
     return expected
 
-# Création dynamique des routes
 for model_name, model in models.items():
     route = f"/predict/{model_name}"
     expected = expected_fields_from_model_name(model_name)
@@ -90,8 +79,6 @@ for model_name, model in models.items():
 
                 df = pd.DataFrame([data])
                 preds = m.predict(df)
-
-                # 🔹 Conversion du label numérique en texte
                 mapped_preds = [LABELS.get(int(p), str(p)) for p in preds]
 
                 return jsonify({
