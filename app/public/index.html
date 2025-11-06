@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="magnus-filters.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/chess.js@0.10.3/chess.js"></script>
+
     <script>
         // *** CONFIG TAILWIND MISE À JOUR AVEC TOUTES LES COULEURS ***
         tailwind.config = {
@@ -129,36 +131,49 @@
     <h3 id="title-h3" class="lg text-center font-semibold mb-8 transition-colors duration-500">Informations de la
         partie</h3>
 
-    <div class="flex-col justify-around items-center w-full my-10">
-        <label class="flex flex-col items-center">
-            <p class="text-lg mb-1" id="label-time">Cadence des coups</p>
-            <input name="time" type="text" placeholder="Ex: 10+5" id="input-time"
+    <div class="flex flex-col items-center w-full my-10">
+        <label class="flex flex-col items-center mb-10">
+            <p class="text-lg mb-1" id="label-increment-code">Cadence des coups</p>
+            <input name="increment_code" type="text" placeholder="Ex: 10+5" id="input-increment-code"
                    class="p-2 rounded w-32 text-center transition-colors duration-500"/>
         </label>
-        <div class="flex justify-between w-full my-10">
-            <label class="flex flex-col items-center">
-                <p class="text-lg text-center mb-1" id="label-ouverture">Ouverture choisie (code)</p>
-                <input name="ouverture" type="text" placeholder="Ex: D10" id="input-ouverture"
-                       class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
-
-            <label class="flex flex-col items-center">
-                <p class="text-lg text-center mb-1" id="label-num-move">Nombre de coups estimés pour l'ouverture</p>
-                <input name="number_of_moves" type="number" placeholder="Ex: 3" id="input-num-move"
-                       class="p-2 rounded w-32 text-center transition-colors duration-500"/>
-            </label>
-        </div>
+        <label class="flex flex-col items-center mb-10">
+            <p class="text-lg text-center mb-1" id="label-num-move">Nombre de coups estimés pour l'ouverture</p>
+            <input name="number_of_moves" type="number" placeholder="Ex: 3" id="input-num-move"
+                   class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+        </label>
+        <label class="flex flex-col items-center mb-10">
+            <p class="text-lg text-center mb-1" id="label-turns">Nombre de tours de la partie (optionnel)</p>
+            <input name="turns" type="number" placeholder="Ex: 40" id="input-turns"
+                   class="p-2 rounded w-32 text-center transition-colors duration-500"/>
+        </label>
     </div>
 
     <hr id="divider-2" class="mb-10 transition-colors duration-500"/>
 
+    <div class="flex justify-center mb-10 gap-6">
 
-    <div class="flex justify-center mb-10 rounded-lg">
-        <div id="chessboard"
-             class="grid grid-cols-8 grid-rows-8 w-96 h-96 border-4 shadow-xl transition-colors duration-500">
+        <div class="flex flex-col items-center">
+            <p class="text-lg text-center mb-2 font-semibold" id="label-board-state">État de l'Ouverture</p>
+            <div id="chessboard"
+                 class="grid grid-cols-8 grid-rows-8 w-64 h-64 border-4 shadow-xl transition-colors duration-500">
+            </div>
         </div>
-    </div>
 
+        <div class="flex flex-col items-start pt-8">
+            <label class="flex flex-col items-start mb-4">
+                <p class="text-lg text-left mb-1" id="label-ouverture-search">Code d'Ouverture (ECO)</p>
+                <input list="opening-codes" name="ouverture" type="text" placeholder="Ex: D10"
+                       id="input-ouverture-search"
+                       oninput="updateBoardForOpening(this.value)"
+                       class="p-2 rounded w-44 text-left transition-colors duration-500"/>
+                <datalist id="opening-codes">
+                </datalist>
+            </label>
+            <p id="opening-name" class="text-sm italic transition-colors duration-500"></p>
+        </div>
+
+    </div>
     <div id="result-container" class="text-center mt-6 p-4 rounded-lg hidden transition-all duration-500">
         <p class="text-xl font-semibold" id="prediction-text">
         </p>
@@ -174,197 +189,8 @@
 </div>
 
 <script src="magnus-themes.js"></script>
+<script src="magnus-data.js"></script>
+<script src="magnus-logic.js"></script>
 
-<script>
-    // --- 0. Définition des Chemins d'Accès Locaux (.png) ---
-    // NOTE : Ces chemins supposent que vous avez un dossier "Ressources"
-    const imagePaths = {
-        'Rook': 'Ressources/rook.png',
-        'Knight': 'Ressources/knight.png',
-        'Bishop': 'Ressources/bishop.png',
-        'Queen': 'Ressources/queen.png',
-        'King': 'Ressources/king.png',
-        'Pawn': 'Ressources/pawn.png'
-    };
-
-    const piecesLayout = [
-        imagePaths.Rook, imagePaths.Knight, imagePaths.Bishop, imagePaths.Queen, imagePaths.King, imagePaths.Bishop, imagePaths.Knight, imagePaths.Rook
-    ];
-
-    // L'objet `themes` est maintenant défini dans magnus-themes.js
-
-    let currentThemeName = 'glacial'; // Thème par défaut
-
-    // --- Logique de prédiction (inchangée) ---
-    function predictOutcome() {
-        const eloWhite = parseInt(document.getElementById('input-white').value);
-        const eloBlack = parseInt(document.getElementById('input-black').value);
-        const resultContainer = document.getElementById('result-container');
-        const predictionText = document.getElementById('prediction-text');
-
-        if (isNaN(eloWhite) || isNaN(eloBlack) || eloWhite < 0 || eloBlack < 0) {
-            predictionText.textContent = "Veuillez entrer des valeurs Elo valides (numériques et positives).";
-            resultContainer.classList.remove('hidden');
-            return;
-        }
-
-        const eloDiff = eloWhite - eloBlack;
-        const expectedScore = 1 / (1 + Math.pow(10, -eloDiff / 400));
-
-        let prediction = "";
-
-        if (expectedScore >= 0.65) {
-            prediction = `Victoire des BLANCS. (Probabilité estimée: ${(expectedScore * 100).toFixed(1)}%)`;
-        } else if (expectedScore <= 0.35) {
-            prediction = `Victoire des NOIRS. (Probabilité estimée: ${((1 - expectedScore) * 100).toFixed(1)}% pour NOIR)`;
-        } else {
-            prediction = `Match serré, probabilité de NULLE élevée. (Score attendu: ${(expectedScore).toFixed(2)})`;
-        }
-
-        predictionText.textContent = prediction;
-        resultContainer.classList.remove('hidden');
-    }
-
-    // --- 2. Génération de l'Échiquier (inchangée) ---
-    function generateChessboard(themeData) {
-        const board = document.getElementById('chessboard');
-        board.innerHTML = '';
-        board.classList.add('border-gray-900');
-
-        for (let i = 0; i < 64; i++) {
-            const row = Math.floor(i / 8);
-            const col = i % 8;
-            const isDark = (row + col) % 2 === 1;
-            const cell = document.createElement('div');
-
-            cell.className = isDark ? themeData.darkSquare : themeData.lightSquare;
-            cell.classList.add('transition-colors', 'duration-500', 'flex', 'justify-center', 'items-center');
-
-            let piecePath = '';
-            let pieceFilterClass = '';
-
-            if (row === 7 || row === 6) {
-                piecePath = (row === 7) ? piecesLayout[col] : imagePaths.Pawn;
-                pieceFilterClass = themeData.pieceFilterClassWhite;
-            } else if (row === 1 || row === 0) {
-                piecePath = (row === 0) ? piecesLayout[col] : imagePaths.Pawn;
-                pieceFilterClass = themeData.pieceFilterClassBlack;
-            }
-
-            if (piecePath) {
-                const pieceElement = document.createElement('img');
-                pieceElement.src = piecePath;
-                pieceElement.alt = "Pièce d'échecs";
-                pieceElement.className = `piece-icon ${pieceFilterClass}`;
-                pieceElement.style.filter = '';
-                cell.appendChild(pieceElement);
-            }
-
-            board.appendChild(cell);
-        }
-    }
-
-    // --- Fonction d'Application du Thème (inchangée) ---
-    function applyTheme(themeName) {
-        // L'objet 'themes' est disponible car magnus-themes.js a été chargé
-        const theme = themes[themeName];
-        if (!theme) return;
-
-        currentThemeName = themeName;
-
-        const whiteStrong = document.getElementById('strong-white');
-        const blackStrong = document.getElementById('strong-black');
-        const resultContainer = document.getElementById('result-container');
-
-        // Nettoyage des anciennes classes de couleur forte (TEXTE)
-        Object.values(themes).forEach(t => {
-            whiteStrong.classList.remove(t.strongTextColorWhite);
-            blackStrong.classList.remove(t.strongTextColorBlack);
-            if (t.result) resultContainer.classList.remove(...t.result.split(' '), 'border');
-        });
-
-        // Application des nouvelles classes de couleur forte (TEXTE)
-        whiteStrong.classList.add(theme.strongTextColorWhite);
-        blackStrong.classList.add(theme.strongTextColorBlack);
-        resultContainer.classList.add(...theme.result.split(' '), 'border');
-
-        const elements = [
-            {id: 'body', classes: theme.body, reset: true},
-            {id: 'main-card', classes: theme.card, reset: true},
-            {id: 'title-h1', classes: theme.title, reset: true},
-            {id: 'title-h2', classes: theme.title, reset: true},
-            {id: 'title-h3', classes: theme.title, reset: true},
-            {id: 'label-white', classes: theme.plainText, reset: true},
-            {id: 'label-black', classes: theme.plainText, reset: true},
-            {id: 'label-time', classes: theme.plainText, reset: true},
-            {id: 'label-ouverture', classes: theme.plainText, reset: true},
-            {id: 'label-num-move', classes: theme.plainText, reset: true},
-            {id: 'divider', classes: theme.divider, reset: true},
-            {id: 'divider-2', classes: theme.divider, reset: true},
-            {id: 'predict-button', classes: theme.button, reset: true},
-            {
-                id: 'input-white',
-                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
-                reset: true
-            },
-            {
-                id: 'input-black',
-                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
-                reset: true
-            },
-            {
-                id: 'input-time',
-                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
-                reset: true
-            },
-            {
-                id: 'input-ouverture',
-                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
-                reset: true
-            },
-            {
-                id: 'input-num-move',
-                classes: `${theme.inputBase} focus:outline-none focus:ring-2 ${theme.focusRing} focus:ring-opacity-75`,
-                reset: true
-            },
-
-        ];
-
-        elements.forEach(elData => {
-            const el = document.getElementById(elData.id);
-            if (el) {
-                // Logique de nettoyage
-                Object.values(themes).forEach(t => {
-                    let classesToClear = [t.body, t.card, t.title, t.plainText, t.divider, t.button];
-                    if (elData.id.startsWith('input-')) {
-                        classesToClear.push(t.inputBase, t.focusRing, 'focus:outline-none', 'focus:ring-2', 'focus:ring-opacity-75');
-                    }
-                    classesToClear.forEach(classString => {
-                        el.classList.remove(...classString.split(' '));
-                    });
-                });
-
-                el.classList.add(...elData.classes.split(' '));
-
-                if (el.tagName === 'INPUT' || el.tagName === 'BUTTON' || el.tagName === 'HR') {
-                    el.classList.add('transition-colors', 'duration-500');
-                }
-            }
-        });
-
-        // Régénérer l'échiquier avec la coloration stable
-        generateChessboard(theme);
-
-        const selectEl = document.getElementById('theme-select');
-        // Nettoyage des focus rings sur le sélecteur
-        Object.values(themes).forEach(t => selectEl.classList.remove(t.focusRing.replace('focus:', '')));
-        selectEl.classList.add(theme.focusRing.replace('focus:', ''));
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        applyTheme(document.getElementById('theme-select').value);
-    });
-
-</script>
 </body>
 </html>
