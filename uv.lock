@@ -683,6 +683,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pytest" },
     { name = "scikit-learn" },
+    { name = "scipy" },
     { name = "uvicorn" },
     { name = "xgboost" },
 ]
@@ -697,6 +698,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "pytest" },
     { name = "scikit-learn", specifier = ">=1.4.0" },
+    { name = "scipy", specifier = ">=1.16.3" },
     { name = "uvicorn", specifier = ">=0.38.0" },
     { name = "xgboost", specifier = ">=3.1.1" },
 ]

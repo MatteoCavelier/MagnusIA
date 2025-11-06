@@ -1,0 +1,514 @@
+[
+  {
+    "config_name": "duration_withturn_novstatus_all_moves",
+    "use_duration": true,
+    "moves_n": null,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5924985442271246,
+    "best_accuracy": 0.8149068322981367,
+    "best_params": {
+      "n_estimators": 550,
+      "max_depth": 4,
+      "learning_rate": 0.29091447472329546
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_all_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_1_moves",
+    "use_duration": true,
+    "moves_n": 1,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5884500720537186,
+    "best_accuracy": 0.8074534161490683,
+    "best_params": {
+      "n_estimators": 600,
+      "max_depth": 7,
+      "learning_rate": 0.2580416658184812
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_1_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_2_moves",
+    "use_duration": true,
+    "moves_n": 2,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5902260108409075,
+    "best_accuracy": 0.810351966873706,
+    "best_params": {
+      "n_estimators": 550,
+      "max_depth": 4,
+      "learning_rate": 0.24530500887855214
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_2_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_3_moves",
+    "use_duration": true,
+    "moves_n": 3,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5913101217992832,
+    "best_accuracy": 0.8128364389233954,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 4,
+      "learning_rate": 0.290933699343387
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_3_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_4_moves",
+    "use_duration": true,
+    "moves_n": 4,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5869148393696979,
+    "best_accuracy": 0.8066252587991718,
+    "best_params": {
+      "n_estimators": 450,
+      "max_depth": 4,
+      "learning_rate": 0.29051644305198077
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_4_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_5_moves",
+    "use_duration": true,
+    "moves_n": 5,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5860228362704292,
+    "best_accuracy": 0.8053830227743272,
+    "best_params": {
+      "n_estimators": 450,
+      "max_depth": 6,
+      "learning_rate": 0.29389703537325
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_5_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_6_moves",
+    "use_duration": true,
+    "moves_n": 6,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5831478563984375,
+    "best_accuracy": 0.8053830227743272,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 7,
+      "learning_rate": 0.2988525962348476
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_6_moves"
+  },
+  {
+    "config_name": "duration_withturn_novstatus_7_moves",
+    "use_duration": true,
+    "moves_n": 7,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5865653827398105,
+    "best_accuracy": 0.8053830227743272,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 8,
+      "learning_rate": 0.21640873846250047
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_withturn_novstatus_7_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_all_moves",
+    "use_duration": true,
+    "moves_n": null,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.41514955444220125,
+    "best_accuracy": 0.5942028985507246,
+    "best_params": {
+      "n_estimators": 450,
+      "max_depth": 3,
+      "learning_rate": 0.2872589681676209
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_all_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_1_moves",
+    "use_duration": true,
+    "moves_n": 1,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4098703338794225,
+    "best_accuracy": 0.6041407867494824,
+    "best_params": {
+      "n_estimators": 150,
+      "max_depth": 8,
+      "learning_rate": 0.01583544654141025
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_1_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_2_moves",
+    "use_duration": true,
+    "moves_n": 2,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.40910304868775066,
+    "best_accuracy": 0.6053830227743271,
+    "best_params": {
+      "n_estimators": 100,
+      "max_depth": 7,
+      "learning_rate": 0.012578242166898986
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_2_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_3_moves",
+    "use_duration": true,
+    "moves_n": 3,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.41324004987444346,
+    "best_accuracy": 0.5908902691511387,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 12,
+      "learning_rate": 0.23476460327909648
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_3_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_4_moves",
+    "use_duration": true,
+    "moves_n": 4,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4161209838958715,
+    "best_accuracy": 0.6037267080745342,
+    "best_params": {
+      "n_estimators": 550,
+      "max_depth": 3,
+      "learning_rate": 0.1475893221606907
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_4_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_5_moves",
+    "use_duration": true,
+    "moves_n": 5,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4112683033696447,
+    "best_accuracy": 0.5971014492753624,
+    "best_params": {
+      "n_estimators": 200,
+      "max_depth": 4,
+      "learning_rate": 0.15218572138107306
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_5_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_6_moves",
+    "use_duration": true,
+    "moves_n": 6,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4151777701870514,
+    "best_accuracy": 0.5942028985507246,
+    "best_params": {
+      "n_estimators": 600,
+      "max_depth": 4,
+      "learning_rate": 0.14392655400236934
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_6_moves"
+  },
+  {
+    "config_name": "duration_noturn_novstatus_7_moves",
+    "use_duration": true,
+    "moves_n": 7,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.40710670396735266,
+    "best_accuracy": 0.6053830227743271,
+    "best_params": {
+      "n_estimators": 100,
+      "max_depth": 5,
+      "learning_rate": 0.010811868702580534
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_duration_noturn_novstatus_7_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_all_moves",
+    "use_duration": false,
+    "moves_n": null,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5985934321211818,
+    "best_accuracy": 0.832968476357268,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 5,
+      "learning_rate": 0.2953465157242545
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_all_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_1_moves",
+    "use_duration": false,
+    "moves_n": 1,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5911042374436785,
+    "best_accuracy": 0.8327495621716288,
+    "best_params": {
+      "n_estimators": 600,
+      "max_depth": 6,
+      "learning_rate": 0.13662432772523156
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_1_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_2_moves",
+    "use_duration": false,
+    "moves_n": 2,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5995321521922014,
+    "best_accuracy": 0.8375656742556917,
+    "best_params": {
+      "n_estimators": 550,
+      "max_depth": 5,
+      "learning_rate": 0.2628200364298043
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_2_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_3_moves",
+    "use_duration": false,
+    "moves_n": 3,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5967968151794416,
+    "best_accuracy": 0.8340630472854641,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 6,
+      "learning_rate": 0.29848554076169437
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_3_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_4_moves",
+    "use_duration": false,
+    "moves_n": 4,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5949411122370248,
+    "best_accuracy": 0.8312171628721541,
+    "best_params": {
+      "n_estimators": 600,
+      "max_depth": 6,
+      "learning_rate": 0.22291660761790766
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_4_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_5_moves",
+    "use_duration": false,
+    "moves_n": 5,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5923939828122801,
+    "best_accuracy": 0.8309982486865148,
+    "best_params": {
+      "n_estimators": 450,
+      "max_depth": 7,
+      "learning_rate": 0.2528198085262748
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_5_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_6_moves",
+    "use_duration": false,
+    "moves_n": 6,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5920708042664068,
+    "best_accuracy": 0.8309982486865148,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 7,
+      "learning_rate": 0.26402990849327523
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_6_moves"
+  },
+  {
+    "config_name": "noduration_withturn_novstatus_7_moves",
+    "use_duration": false,
+    "moves_n": 7,
+    "use_turns": true,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.5928509136055181,
+    "best_accuracy": 0.8316549912434326,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 5,
+      "learning_rate": 0.22883424258821866
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_withturn_novstatus_7_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_all_moves",
+    "use_duration": false,
+    "moves_n": null,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4295716085903978,
+    "best_accuracy": 0.6317863397548161,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 3,
+      "learning_rate": 0.04281650135832251
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_all_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_1_moves",
+    "use_duration": false,
+    "moves_n": 1,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.43137356926870524,
+    "best_accuracy": 0.6346322241681261,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 3,
+      "learning_rate": 0.01188426903817262
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_1_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_2_moves",
+    "use_duration": false,
+    "moves_n": 2,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.43084764436238787,
+    "best_accuracy": 0.6339754816112084,
+    "best_params": {
+      "n_estimators": 450,
+      "max_depth": 3,
+      "learning_rate": 0.01347329379555794
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_2_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_3_moves",
+    "use_duration": false,
+    "moves_n": 3,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.43047525599758546,
+    "best_accuracy": 0.6330998248686515,
+    "best_params": {
+      "n_estimators": 550,
+      "max_depth": 3,
+      "learning_rate": 0.025330539326907407
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_3_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_4_moves",
+    "use_duration": false,
+    "moves_n": 4,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4296069156873785,
+    "best_accuracy": 0.6320052539404554,
+    "best_params": {
+      "n_estimators": 200,
+      "max_depth": 3,
+      "learning_rate": 0.044739206783275975
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_4_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_5_moves",
+    "use_duration": false,
+    "moves_n": 5,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4309076974603634,
+    "best_accuracy": 0.6339754816112084,
+    "best_params": {
+      "n_estimators": 500,
+      "max_depth": 3,
+      "learning_rate": 0.012425618810180226
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_5_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_6_moves",
+    "use_duration": false,
+    "moves_n": 6,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4301271890244205,
+    "best_accuracy": 0.6330998248686515,
+    "best_params": {
+      "n_estimators": 600,
+      "max_depth": 3,
+      "learning_rate": 0.011872556246196564
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_6_moves"
+  },
+  {
+    "config_name": "noduration_noturn_novstatus_7_moves",
+    "use_duration": false,
+    "moves_n": 7,
+    "use_turns": false,
+    "use_victory_status": false,
+    "moves_only_n": true,
+    "best_f1_macro": 0.4304455620775547,
+    "best_accuracy": 0.6330998248686515,
+    "best_params": {
+      "n_estimators": 400,
+      "max_depth": 3,
+      "learning_rate": 0.030693407325818354
+    },
+    "experiment_name": "XGB_Optuna_Multi_Config_noduration_noturn_novstatus_7_moves"
+  }
+]

@@ -111,7 +111,7 @@ const themes = {
         strongTextColorWhite: 'text-emerald-400',
         strongTextColorBlack: 'text-emerald-900',
     },
-    // 7. RETROWAVE (Anciennement wavesynth)
+    // 7. RETROWAVE
     retrowave: {
         body: 'bg-gradient-to-t from-purple-900 to-orange-400',
         card: 'bg-gray-900/80 border-purple-400',
@@ -137,16 +137,14 @@ const themes = {
         plainText: 'text-gray-900',
         divider: 'border-gray-500',
         button: 'bg-gray-900 hover:bg-black text-white',
-        // Correction de la couleur du texte de l'input : doit être visible sur bg-stone-200
         inputBase: 'border-gray-400 bg-stone-200 text-gray-900',
         focusRing: 'focus:ring-gray-900',
         result: 'bg-gray-200/50 text-gray-800 border-gray-900',
         lightSquare: 'bg-slate-400',
         darkSquare: 'bg-charbon',
-        // Inversion pour que les Blancs soient Blancs et les Noirs soient Noirs
         pieceFilterClassWhite: 'filter-white-piece',
         pieceFilterClassBlack: 'filter-black-piece',
-        strongTextColorWhite: 'text-gray-900',
+        strongTextColorWhite: 'text-stone-300',
         strongTextColorBlack: 'text-gray-800',
     },
     // 9. AUTOMNE
@@ -164,7 +162,7 @@ const themes = {
         darkSquare: 'bg-zinc-600',
         pieceFilterClassWhite: 'filter-autumn-white-piece',
         pieceFilterClassBlack: 'filter-zinc-900-piece',
-        strongTextColorWhite: 'text-amber-900',
+        strongTextColorWhite: 'text-amber-600',
         strongTextColorBlack: 'text-zinc-900',
     },
     // 10. CYBERPUNK
