@@ -1,0 +1,6 @@
+artifact_location: file:///c:/School/MagnusIA/notebooks/mlruns/586782741571283193
+creation_time: 1762341278584
+experiment_id: '586782741571283193'
+last_update_time: 1762341278584
+lifecycle_stage: active
+name: XGBoost_Duration_3moves
