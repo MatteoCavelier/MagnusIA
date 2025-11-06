@@ -43,6 +43,8 @@ def load_features_target(
     csv_path: str,
     *,
     use_duration: bool = True,
+    use_victory_status: bool = True,
+    use_turns: bool = True,
     moves_n: Optional[int] = None,
     moves_only_n: bool = True,
     moves_new_column: Optional[str] = None,
@@ -54,6 +56,8 @@ def load_features_target(
         moves_only_n=moves_only_n,
         moves_new_column=moves_new_column,
         moves_add_all_prefix=moves_add_all_prefix,
+        drop_turns=not use_turns,
+        drop_victory_status=not use_victory_status,
     )
     key = "duration" if use_duration else "noduration"
     df = datasets[key].drop(columns=["rated"], errors="ignore").copy()
@@ -110,6 +114,8 @@ def run_study(
     test_size: float = 0.3,
     random_state: int = 42,
     use_duration: bool = True,
+    use_victory_status: bool = True,
+    use_turns: bool = True,
     moves_n: Optional[int] = None,
     moves_only_n: bool = True,
     moves_new_column: Optional[str] = None,
@@ -119,6 +125,8 @@ def run_study(
     X, y = load_features_target(
         csv_path,
         use_duration=use_duration,
+        use_victory_status=use_victory_status,
+        use_turns=use_turns,
         moves_n=moves_n,
         moves_only_n=moves_only_n,
         moves_new_column=moves_new_column,
@@ -139,12 +147,15 @@ def run_study(
     preprocessor = build_preprocessor(X)
 
     # Derive a run/model dir name based on options (matches local save dir)
-    subdir = f"{'duration' if use_duration else 'noduration'}-{(('None') if moves_n is None else moves_n)}-{bool(moves_only_n)}"
+    # Include withturn/noturn to indicate whether 'turns' column is used
+    subdir = f"{'duration' if use_duration else 'noduration'}-{'withturn' if use_turns else 'noturn'}-{'withvstatus' if use_victory_status else 'novstatus'}-{(('None') if moves_n is None else moves_n)}-{bool(moves_only_n)}"
 
     with mlflow.start_run(run_name=subdir):
         # Log dataset/options used for this study
         mlflow.log_params({
             "use_duration": use_duration,
+            "use_victory_status": use_victory_status,
+            "use_turns": use_turns,
             "moves_n": -1 if moves_n is None else moves_n,
             "moves_only_n": moves_only_n,
             "test_size": test_size,
@@ -199,6 +210,7 @@ def run_study(
         label_map_path = models_dir / "label_index_to_class.json"
         params_path = models_dir / "best_params.json"
         random_state_path = models_dir / "random_state.json"
+        metrics_path = models_dir / "metrics.json"
     
         joblib.dump(best_pipeline, pipeline_path)
         # Also save in MLflow's local model format for portability
@@ -209,9 +221,26 @@ def run_study(
             json.dump(best_params, f, ensure_ascii=False, indent=2)
         with open(random_state_path, "w", encoding="utf-8") as f:
             json.dump(random_state, f, ensure_ascii=False, indent=2)
+        with open(metrics_path, "w", encoding="utf-8") as f:
+            json.dump({
+                "best_accuracy": acc_valid,
+                "best_f1_macro": f1,
+                "best_train_accuracy": acc_train,
+            }, f, ensure_ascii=False, indent=2)
 
         # Log where we saved locally for convenience
         mlflow.log_param("local_model_dir", str(models_dir))
+
+        # Attach best metrics to the returned study for downstream use
+        try:
+            study.best_metrics = {
+                "best_accuracy": acc_valid,
+                "best_f1_macro": f1,
+                "best_train_accuracy": acc_train,
+                "local_model_dir": str(models_dir),
+            }
+        except Exception:
+            pass
 
         return study
 
@@ -224,6 +253,8 @@ if __name__ == "__main__":
     parser.add_argument("--test_size", type=float, default=0.3, help="Validation split proportion")
     parser.add_argument("--random_state", type=int, default=42, help="Random seed")
     parser.add_argument("--use_duration", type=lambda v: str(v).lower() in ["1","true","yes","y"], default=True, help="Use duration dataset (True) or noduration (False)")
+    parser.add_argument("--use_victory_status", type=lambda v: str(v).lower() in ["1","true","yes","y"], default=True, help="Whether to keep the 'victory_status' column (True) or drop it (False)")
+    parser.add_argument("--use_turns", type=lambda v: str(v).lower() in ["1","true","yes","y"], default=True, help="Whether to keep the 'turns' column (True) or drop it (False)")
     parser.add_argument("--moves_n", type=int, default=None, help="Number of first moves to derive; None to disable")
     parser.add_argument("--moves_only_n", type=lambda v: str(v).lower() in ["1","true","yes","y"], default=True, help="If True, keep exactly n moves; else create cumulative moves_1..n")
     parser.add_argument("--moves_new_column", type=str, default=None, help="Optional column name to store the truncated moves")
@@ -238,6 +269,8 @@ if __name__ == "__main__":
         test_size=args.test_size,
         random_state=args.random_state,
         use_duration=args.use_duration,
+        use_victory_status=args.use_victory_status,
+        use_turns=args.use_turns,
         moves_n=args.moves_n,
         moves_only_n=args.moves_only_n,
         moves_new_column=args.moves_new_column,
