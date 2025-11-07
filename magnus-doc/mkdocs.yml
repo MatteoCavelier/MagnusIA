@@ -1,1 +1,8 @@
-site_name: My Docs
+site_name: Magnus IA Doc
+site_description: Documentation pour Magnus IA
+
+nav:
+  - Accueil: index.md
+  - Guide d'installation: install.md
+  - Démarrage Rapide (Quick Start): quick_start.md
+  - Notebooks: notebooks.md
