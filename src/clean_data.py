@@ -116,7 +116,9 @@ def clean_chess_data(
         moves_n: Optional[int] = None,
         moves_only_n: bool = True,
         moves_new_column: Optional[str] = None,
-        moves_add_all_prefix: str = 'moves_'
+        moves_add_all_prefix: str = 'moves_',
+        drop_turns: bool = False,
+        drop_victory_status: bool = False,
 ) -> Dict[str, pd.DataFrame]:
     """High-level pipeline that reproduces the notebook cleaning steps.
 
@@ -157,6 +159,17 @@ def clean_chess_data(
 
     # Default columns to drop based on the notebook
     default_drop = ['id', 'white_id','black_id','opening_name', 'moves']
+    # Optionally drop the number of turns column
+    if drop_turns:
+        default_drop.append('turns')
+    # Optionally drop victory_status column
+    if drop_victory_status:
+        default_drop.append('victory_status')
+    # Add rated to the columns to drop
+    default_drop.append('rated')
+    # Add columns to drop from the columns_to_drop list
+    if columns_to_drop is not None:
+        default_drop.extend(columns_to_drop)
     cols = columns_to_drop if columns_to_drop is not None else default_drop
 
     dataset_duration = drop_columns(dataset_duration, cols)
