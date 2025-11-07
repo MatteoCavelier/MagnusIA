@@ -3,9 +3,10 @@
 ## Prérequis
 
 Listez ici les prérequis système ou logiciels :
+
 * Python 3.10+
 * Git
-* (etc.)
+* Node.js
 
 ## Installation
 
@@ -39,7 +40,7 @@ cd MagnusIA
 ```
 
 ### 4. Installation des dépendances web
- ```shell
+```shell
  cd app
  npm i
- ```
+```

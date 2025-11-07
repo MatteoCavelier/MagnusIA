@@ -5,4 +5,4 @@ nav:
   - Accueil: index.md
   - Guide d'installation: install.md
   - Démarrage Rapide (Quick Start): quick_start.md
-  - Notebooks: notebooks.md
+  - Notebook: notebook.md
